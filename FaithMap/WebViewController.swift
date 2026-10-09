@@ -3,7 +3,8 @@ import WebKit
 
 /// Faith Map iOS wrapper — WKWebView loading the production web app.
 /// No browser chrome: installs with app icon and splash, feels native.
-class WebViewController: UIViewController, WKNavigationDelegate {
+/// Includes StoreKit 2 bridge for native Apple in-app purchases.
+class WebViewController: UIViewController, WKNavigationDelegate, WKScriptMessageHandler {
 
     private var webView: WKWebView!
 
@@ -20,11 +21,28 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         prefs.allowsContentJavaScript = true
         config.defaultWebpagePreferences = prefs
 
+        // StoreKit JS bridge — web app calls window.webkit.messageHandlers.storekit.postMessage(...)
+        config.userContentController.add(self, name: "storekit")
+
         webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
         webView.allowsBackForwardNavigationGestures = false
         webView.scrollView.bounces = false
         view = webView
+
+        if #available(iOS 15.0, *) {
+            StoreKitManager.shared.attach(webView: webView)
+        }
+    }
+
+    // MARK: - WKScriptMessageHandler
+
+    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
+        guard message.name == "storekit",
+              let body = message.body as? [String: Any] else { return }
+        if #available(iOS 15.0, *) {
+            StoreKitManager.shared.handleJSMessage(body)
+        }
     }
 
     override func viewDidLoad() {
