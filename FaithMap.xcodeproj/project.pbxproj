@@ -1,0 +1,56 @@
+// !$*UTF8*$!
+{
+    archiveVersion = 1;
+    classes = {
+    };
+    objectVersion = 56;
+    objects = {
+        1A2B3C4D5E6F0001 = { isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F0011; };
+        1A2B3C4D5E6F0002 = { isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F0012; };
+        1A2B3C4D5E6F0003 = { isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F0013; };
+        1A2B3C4D5E6F0004 = { isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F0014; };
+        1A2B3C4D5E6F0011 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+        1A2B3C4D5E6F0012 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+        1A2B3C4D5E6F0013 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+        1A2B3C4D5E6F0014 = { isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+        1A2B3C4D5E6F0020 = {
+            isa = PBXGroup;
+            children = (1A2B3C4D5E6F0011, 1A2B3C4D5E6F0012, 1A2B3C4D5E6F0013, 1A2B3C4D5E6F0014);
+            path = FaithMap;
+            sourceTree = "<group>";
+        };
+        1A2B3C4D5E6F0030 = {
+            isa = PBXNativeTarget;
+            buildConfigurationList = 1A2B3C4D5E6F0040;
+            buildPhases = (1A2B3C4D5E6F0031, 1A2B3C4D5E6F0032, 1A2B3C4D5E6F0033);
+            buildRules = ();
+            dependencies = ();
+            name = FaithMap;
+            productName = FaithMap;
+        };
+        1A2B3C4D5E6F0031 = { isa = PBXSourcesBuildPhase; files = (1A2B3C4D5E6F0001, 1A2B3C4D5E6F0002, 1A2B3C4D5E6F0003); };
+        1A2B3C4D5E6F0032 = { isa = PBXResourcesBuildPhase; files = (1A2B3C4D5E6F0004); };
+        1A2B3C4D5E6F0033 = { isa = PBXFrameworksBuildPhase; files = (); };
+        1A2B3C4D5E6F0040 = {
+            isa = XCConfigurationList;
+            buildConfigurations = (1A2B3C4D5E6F0041, 1A2B3C4D5E6F0042);
+            defaultConfigurationIsVisible = 0;
+        };
+        1A2B3C4D5E6F0041 = { isa = XCBuildConfiguration; name = Debug; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = app.havenmedia.faithmap; PRODUCT_NAME = FaithMap; SWIFT_VERSION = 5.0; }; };
+        1A2B3C4D5E6F0042 = { isa = XCBuildConfiguration; name = Release; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = app.havenmedia.faithmap; PRODUCT_NAME = FaithMap; SWIFT_VERSION = 5.0; }; };
+        1A2B3C4D5E6F0050 = {
+            isa = PBXProject;
+            buildConfigurationList = 1A2B3C4D5E6F0051;
+            mainGroup = 1A2B3C4D5E6F0020;
+            targets = (1A2B3C4D5E6F0030);
+        };
+        1A2B3C4D5E6F0051 = {
+            isa = XCConfigurationList;
+            buildConfigurations = (1A2B3C4D5E6F0052, 1A2B3C4D5E6F0053);
+            defaultConfigurationIsVisible = 0;
+        };
+        1A2B3C4D5E6F0052 = { isa = XCBuildConfiguration; name = Debug; buildSettings = {}; };
+        1A2B3C4D5E6F0053 = { isa = XCBuildConfiguration; name = Release; buildSettings = {}; };
+    };
+    rootObject = 1A2B3C4D5E6F0050;
+}
