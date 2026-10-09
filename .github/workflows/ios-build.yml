@@ -67,4 +67,4 @@ jobs:
           app-path: 'build/ipa/FaithMap.ipa'
           issuer-id: ${{ secrets.ASC_ISSUER_ID }}
           api-key-id: ${{ secrets.ASC_KEY_ID }}
-          api-private-key: ${{ secrets.ASC_P8_BASE64 }}
+          api-private-key: ${{ secrets.ASC_PRIVATE_KEY }}
