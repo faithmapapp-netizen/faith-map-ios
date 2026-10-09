@@ -36,8 +36,8 @@
             buildConfigurations = (1A2B3C4D5E6F0041, 1A2B3C4D5E6F0042);
             defaultConfigurationIsVisible = 0;
         };
-        1A2B3C4D5E6F0041 = { isa = XCBuildConfiguration; name = Debug; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = app.havenmedia.faithmap; PRODUCT_NAME = FaithMap; SWIFT_VERSION = 5.0; }; };
-        1A2B3C4D5E6F0042 = { isa = XCBuildConfiguration; name = Release; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = app.havenmedia.faithmap; PRODUCT_NAME = FaithMap; SWIFT_VERSION = 5.0; }; };
+        1A2B3C4D5E6F0041 = { isa = XCBuildConfiguration; name = Debug; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = app.havenmedia.faithmap; PRODUCT_NAME = FaithMap; SWIFT_VERSION = 5.0; SDKROOT = iphoneos; TARGETED_DEVICE_FAMILY = 1; IPHONEOS_DEPLOYMENT_TARGET = 17.0; CODE_SIGN_STYLE = Manual; }; };
+        1A2B3C4D5E6F0042 = { isa = XCBuildConfiguration; name = Release; buildSettings = { PRODUCT_BUNDLE_IDENTIFIER = app.havenmedia.faithmap; PRODUCT_NAME = FaithMap; SWIFT_VERSION = 5.0; SDKROOT = iphoneos; TARGETED_DEVICE_FAMILY = 1; IPHONEOS_DEPLOYMENT_TARGET = 17.0; CODE_SIGN_STYLE = Manual; }; };
         1A2B3C4D5E6F0050 = {
             isa = PBXProject;
             buildConfigurationList = 1A2B3C4D5E6F0051;
