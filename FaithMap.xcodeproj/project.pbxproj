@@ -27,7 +27,10 @@
             dependencies = ();
             name = FaithMap;
             productName = FaithMap;
+            productType = "com.apple.product-type.application";
+            productReference = 1A2B3C4D5E6F0060;
         };
+        1A2B3C4D5E6F0060 = { isa = PBXFileReference; explicitFileType = wrapper.application; path = FaithMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
         1A2B3C4D5E6F0031 = { isa = PBXSourcesBuildPhase; files = (1A2B3C4D5E6F0001, 1A2B3C4D5E6F0002, 1A2B3C4D5E6F0003); };
         1A2B3C4D5E6F0032 = { isa = PBXResourcesBuildPhase; files = (1A2B3C4D5E6F0004); };
         1A2B3C4D5E6F0033 = { isa = PBXFrameworksBuildPhase; files = (); };
