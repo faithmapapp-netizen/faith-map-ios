@@ -10,5 +10,12 @@
     <false/>
     <key>uploadSymbols</key>
     <true/>
+    <key>provisioningProfiles</key>
+    <dict>
+        <key>app.havenmedia.faithmap</key>
+        <string>Faith Map App Store</string>
+    </dict>
+    <key>signingCertificate</key>
+    <string>Apple Distribution</string>
 </dict>
 </plist>
