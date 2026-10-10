@@ -23,6 +23,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKScriptMessage
 
         // StoreKit JS bridge — web app calls window.webkit.messageHandlers.storekit.postMessage(...)
         config.userContentController.add(self, name: "storekit")
+        // Native Apple Sign-In bridge — web app calls window.webkit.messageHandlers.appleAuth.postMessage(...)
+        config.userContentController.add(self, name: "appleAuth")
 
         webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
@@ -35,13 +37,21 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKScriptMessage
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        AppleAuthManager.shared.attach(webView: webView, viewController: self)
+    }
+
     // MARK: - WKScriptMessageHandler
 
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        guard message.name == "storekit",
-              let body = message.body as? [String: Any] else { return }
-        if #available(iOS 15.0, *) {
-            StoreKitManager.shared.handleJSMessage(body)
+        guard let body = message.body as? [String: Any] else { return }
+        if message.name == "storekit" {
+            if #available(iOS 15.0, *) {
+                StoreKitManager.shared.handleJSMessage(body)
+            }
+        } else if message.name == "appleAuth" {
+            AppleAuthManager.shared.handleJSMessage(body)
         }
     }
 

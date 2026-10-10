@@ -9,17 +9,19 @@
         1A2B3C4D5E6F0002 = { isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F0012; };
         1A2B3C4D5E6F0003 = { isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F0013; };
 		1A2B3C4D5E6F0006 = { isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F0016; };
+		1A2B3C4D5E6F0007 = { isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F0017; };
         1A2B3C4D5E6F0004 = { isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F0014; };
 		1A2B3C4D5E6F0005 = { isa = PBXBuildFile; fileRef = 1A2B3C4D5E6F0015; };
         1A2B3C4D5E6F0011 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
         1A2B3C4D5E6F0012 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
         1A2B3C4D5E6F0013 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		1A2B3C4D5E6F0016 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManager.swift; sourceTree = "<group>"; };
+		1A2B3C4D5E6F0017 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthManager.swift; sourceTree = "<group>"; };
         1A2B3C4D5E6F0014 = { isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1A2B3C4D5E6F0015 = { isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
         1A2B3C4D5E6F0020 = {
             isa = PBXGroup;
-            children = (1A2B3C4D5E6F0011, 1A2B3C4D5E6F0012, 1A2B3C4D5E6F0013, 1A2B3C4D5E6F0014, 1A2B3C4D5E6F0015, 1A2B3C4D5E6F0016);
+            children = (1A2B3C4D5E6F0011, 1A2B3C4D5E6F0012, 1A2B3C4D5E6F0013, 1A2B3C4D5E6F0014, 1A2B3C4D5E6F0015, 1A2B3C4D5E6F0016, 1A2B3C4D5E6F0017);
             path = FaithMap;
             sourceTree = "<group>";
         };
@@ -35,7 +37,7 @@
             productReference = 1A2B3C4D5E6F0060;
         };
         1A2B3C4D5E6F0060 = { isa = PBXFileReference; explicitFileType = wrapper.application; path = FaithMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
-        1A2B3C4D5E6F0031 = { isa = PBXSourcesBuildPhase; files = (1A2B3C4D5E6F0001, 1A2B3C4D5E6F0002, 1A2B3C4D5E6F0003, 1A2B3C4D5E6F0006); };
+        1A2B3C4D5E6F0031 = { isa = PBXSourcesBuildPhase; files = (1A2B3C4D5E6F0001, 1A2B3C4D5E6F0002, 1A2B3C4D5E6F0003, 1A2B3C4D5E6F0006, 1A2B3C4D5E6F0007); };
         1A2B3C4D5E6F0032 = { isa = PBXResourcesBuildPhase; files = (1A2B3C4D5E6F0004, 1A2B3C4D5E6F0005); };
         1A2B3C4D5E6F0033 = { isa = PBXFrameworksBuildPhase; files = (); };
         1A2B3C4D5E6F0040 = {
