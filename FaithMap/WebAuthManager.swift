@@ -21,12 +21,12 @@ class WebAuthManager: NSObject {
         ) { [weak self] callbackURL, error in
             guard let self = self else { return }
             if let error = error {
-                self.dispatchResult(provider: provider, idToken: nil, accessToken: nil, error: error.localizedDescription)
+                self.dispatchResult(provider: provider, idToken: nil, accessToken: nil, nonce: nil, error: error.localizedDescription)
                 return
             }
             guard let url = callbackURL,
                   let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-                self.dispatchResult(provider: provider, idToken: nil, accessToken: nil, error: "Invalid callback")
+                self.dispatchResult(provider: provider, idToken: nil, accessToken: nil, nonce: nil, error: "Invalid callback")
                 return
             }
 
