@@ -25,6 +25,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKScriptMessage
         config.userContentController.add(self, name: "storekit")
         // Native Apple Sign-In bridge — web app calls window.webkit.messageHandlers.appleAuth.postMessage(...)
         config.userContentController.add(self, name: "appleAuth")
+        // OAuth via system browser — web app calls window.webkit.messageHandlers.oauthAuth.postMessage(...)
+        config.userContentController.add(self, name: "oauthAuth")
 
         webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
@@ -44,6 +46,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKScriptMessage
 
     // MARK: - WKScriptMessageHandler
 
+    private var webAuthManager: WebAuthManager?
+
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let body = message.body as? [String: Any] else { return }
         if message.name == "storekit" {
@@ -52,6 +56,12 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKScriptMessage
             }
         } else if message.name == "appleAuth" {
             AppleAuthManager.shared.handleJSMessage(body)
+        } else if message.name == "oauthAuth" {
+            let provider = body["provider"] as? String ?? "google"
+            if webAuthManager == nil {
+                webAuthManager = WebAuthManager(webView: webView)
+            }
+            webAuthManager?.startOAuth(provider: provider)
         }
     }
 
