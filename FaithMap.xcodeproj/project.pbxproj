@@ -24,7 +24,7 @@
 		1A2B3C4D5E6F0015 = { isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
         1A2B3C4D5E6F0020 = {
             isa = PBXGroup;
-            children = (1A2B3C4D5E6F0011, 1A2B3C4D5E6F0012, 1A2B3C4D5E6F0013, 1A2B3C4D5E6F0014, 1A2B3C4D5E6F0015, 1A2B3C4D5E6F0016, 1A2B3C4D5E6F0017);
+            children = (1A2B3C4D5E6F0011, 1A2B3C4D5E6F0012, 1A2B3C4D5E6F0013, 1A2B3C4D5E6F0014, 1A2B3C4D5E6F0015, 1A2B3C4D5E6F0016, 1A2B3C4D5E6F0017, 1A2B3C4D5E6F0018);
             path = FaithMap;
             sourceTree = "<group>";
         };
