@@ -32,12 +32,14 @@ class WebAuthManager: NSObject {
 
             var idToken: String?
             var accessToken: String?
+            var nonce: String?
             for item in components.queryItems ?? [] {
                 if item.name == "idToken" { idToken = item.value }
                 if item.name == "accessToken" { accessToken = item.value }
+                if item.name == "nonce" { nonce = item.value }
             }
 
-            self.dispatchResult(provider: provider, idToken: idToken, accessToken: accessToken, error: nil)
+            self.dispatchResult(provider: provider, idToken: idToken, accessToken: accessToken, nonce: nonce, error: nil)
         }
 
         session?.presentationContextProvider = self
@@ -45,10 +47,11 @@ class WebAuthManager: NSObject {
         session?.start()
     }
 
-    private func dispatchResult(provider: String, idToken: String?, accessToken: String?, error: String?) {
+    private func dispatchResult(provider: String, idToken: String?, accessToken: String?, nonce: String?, error: String?) {
         var detail: [String: Any] = ["provider": provider]
         if let idToken = idToken { detail["idToken"] = idToken }
         if let accessToken = accessToken { detail["accessToken"] = accessToken }
+        if let nonce = nonce { detail["nonce"] = nonce }
         if let error = error { detail["error"] = error }
 
         guard let jsonData = try? JSONSerialization.data(withJSONObject: detail),
