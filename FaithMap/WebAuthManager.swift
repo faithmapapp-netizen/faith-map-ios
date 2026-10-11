@@ -21,25 +21,27 @@ class WebAuthManager: NSObject {
         ) { [weak self] callbackURL, error in
             guard let self = self else { return }
             if let error = error {
-                self.dispatchResult(provider: provider, idToken: nil, accessToken: nil, nonce: nil, error: error.localizedDescription)
+                self.dispatchResult(provider: provider, idToken: nil, accessToken: nil, nonce: nil, authCode: nil, error: error.localizedDescription)
                 return
             }
             guard let url = callbackURL,
                   let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-                self.dispatchResult(provider: provider, idToken: nil, accessToken: nil, nonce: nil, error: "Invalid callback")
+                self.dispatchResult(provider: provider, idToken: nil, accessToken: nil, nonce: nil, authCode: nil, error: "Invalid callback")
                 return
             }
 
             var idToken: String?
             var accessToken: String?
             var nonce: String?
+            var authCode: String?
             for item in components.queryItems ?? [] {
                 if item.name == "idToken" { idToken = item.value }
                 if item.name == "accessToken" { accessToken = item.value }
                 if item.name == "nonce" { nonce = item.value }
+                if item.name == "authCode" { authCode = item.value }
             }
 
-            self.dispatchResult(provider: provider, idToken: idToken, accessToken: accessToken, nonce: nonce, error: nil)
+            self.dispatchResult(provider: provider, idToken: idToken, accessToken: accessToken, nonce: nonce, authCode: authCode, error: nil)
         }
 
         session?.presentationContextProvider = self
@@ -47,11 +49,12 @@ class WebAuthManager: NSObject {
         session?.start()
     }
 
-    private func dispatchResult(provider: String, idToken: String?, accessToken: String?, nonce: String?, error: String?) {
+    private func dispatchResult(provider: String, idToken: String?, accessToken: String?, nonce: String?, authCode: String?, error: String?) {
         var detail: [String: Any] = ["provider": provider]
         if let idToken = idToken { detail["idToken"] = idToken }
         if let accessToken = accessToken { detail["accessToken"] = accessToken }
         if let nonce = nonce { detail["nonce"] = nonce }
+        if let authCode = authCode { detail["authCode"] = authCode }
         if let error = error { detail["error"] = error }
 
         guard let jsonData = try? JSONSerialization.data(withJSONObject: detail),
