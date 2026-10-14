@@ -27,6 +27,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKScriptMessage
         config.userContentController.add(self, name: "appleAuth")
         // OAuth via system browser — web app calls window.webkit.messageHandlers.oauthAuth.postMessage(...)
         config.userContentController.add(self, name: "oauthAuth")
+        // Local notifications bridge — web app calls window.webkit.messageHandlers.notifications.postMessage(...)
+        config.userContentController.add(self, name: "notifications")
 
         webView = WKWebView(frame: .zero, configuration: config)
         webView.navigationDelegate = self
@@ -37,6 +39,7 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKScriptMessage
         if #available(iOS 15.0, *) {
             StoreKitManager.shared.attach(webView: webView)
         }
+        NotificationManager.shared.attach(webView: webView)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -56,6 +59,8 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKScriptMessage
             }
         } else if message.name == "appleAuth" {
             AppleAuthManager.shared.handleJSMessage(body)
+        } else if message.name == "notifications" {
+            NotificationManager.shared.handleJSMessage(body)
         } else if message.name == "oauthAuth" {
             let provider = body["provider"] as? String ?? "google"
             if webAuthManager == nil {
