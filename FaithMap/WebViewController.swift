@@ -72,7 +72,98 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKScriptMessage
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // Build 12 — poster launch hold (cold start only, see showLaunchSplash).
+        showLaunchSplash()
+        // The web view loads underneath the splash — the hold never delays it.
         webView.load(URLRequest(url: appURL))
+    }
+
+    // MARK: - Launch poster hold (Build 12)
+
+    /// Minimum time the poster stays up on cold start.
+    private let splashMinDuration: TimeInterval = 3.0
+    /// Hard cap: a slow network must never trap the user behind the poster.
+    private let splashMaxDuration: TimeInterval = 5.0
+    private var splashOverlay: UIView?
+    private var splashMinElapsed = false
+    private var splashLoadFinished = false
+    private var splashDismissed = false
+
+    /// Presents the same LaunchPoster treatment as LaunchScreen.storyboard
+    /// (composed poster image, aspect-fit, on the poster's sky tone #1A4C79)
+    /// above the web view, so the transition from the system launch screen is
+    /// seamless. Runs once from viewDidLoad — this controller is created once
+    /// per scene connection, i.e. cold start only: returning from the
+    /// background or navigating inside the app never re-shows the poster.
+    private func showLaunchSplash() {
+        let overlay = UIView(frame: webView.bounds)
+        overlay.backgroundColor = UIColor(red: 26.0 / 255.0, green: 76.0 / 255.0, blue: 121.0 / 255.0, alpha: 1.0)
+        let imageView = UIImageView(image: UIImage(named: "LaunchPoster"))
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        overlay.addSubview(imageView)
+        NSLayoutConstraint.activate([
+            imageView.leadingAnchor.constraint(equalTo: overlay.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: overlay.trailingAnchor),
+            imageView.topAnchor.constraint(equalTo: overlay.topAnchor),
+            imageView.bottomAnchor.constraint(equalTo: overlay.bottomAnchor)
+        ])
+        overlay.translatesAutoresizingMaskIntoConstraints = false
+        webView.addSubview(overlay)
+        NSLayoutConstraint.activate([
+            overlay.leadingAnchor.constraint(equalTo: webView.leadingAnchor),
+            overlay.trailingAnchor.constraint(equalTo: webView.trailingAnchor),
+            overlay.topAnchor.constraint(equalTo: webView.topAnchor),
+            overlay.bottomAnchor.constraint(equalTo: webView.bottomAnchor)
+        ])
+        splashOverlay = overlay
+
+        // Minimum-hold gate: after 3s, dismissal only waits on the first load.
+        DispatchQueue.main.asyncAfter(deadline: .now() + splashMinDuration) { [weak self] in
+            self?.splashMinElapsed = true
+            self?.dismissLaunchSplashIfReady()
+        }
+        // Hard cap: dismiss at 5s even if the first load is still pending.
+        DispatchQueue.main.asyncAfter(deadline: .now() + splashMaxDuration) { [weak self] in
+            self?.dismissLaunchSplash()
+        }
+    }
+
+    private func dismissLaunchSplashIfReady() {
+        guard splashMinElapsed, splashLoadFinished else { return }
+        dismissLaunchSplash()
+    }
+
+    private func dismissLaunchSplash() {
+        guard !splashDismissed, let overlay = splashOverlay else { return }
+        splashDismissed = true
+        splashOverlay = nil
+        if UIAccessibility.isReduceMotionEnabled {
+            overlay.removeFromSuperview()
+        } else {
+            UIView.animate(withDuration: 0.35, animations: {
+                overlay.alpha = 0
+            }, completion: { _ in
+                overlay.removeFromSuperview()
+            })
+        }
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        splashLoadFinished = true
+        dismissLaunchSplashIfReady()
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        // A failed first load also ends the wait (the 3s minimum still applies);
+        // the user then sees the web view's own state instead of the poster.
+        splashLoadFinished = true
+        dismissLaunchSplashIfReady()
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        splashLoadFinished = true
+        dismissLaunchSplashIfReady()
     }
 
     // Keep navigation inside the app for faith-map domains; open externals in Safari
